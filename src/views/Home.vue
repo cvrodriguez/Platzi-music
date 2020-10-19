@@ -1,34 +1,27 @@
-<template>
+<template lang="pug">
+.container.columns
+  .column.box.is-3.is-offset-5
+    .column.is-10.is-offset-1
+      img(alt="Vue logo", src="../assets/imagen.jpg")
+      h1.title.is-4 Estacion Platzi
 
-      <div class="container columns">
-        <div class="column box is-3 is-offset-5">
-          <div class="column is-10 is-offset-1">
-            <img alt="Vue logo" src="../assets/imagen.jpg" />
-          </div>
-          <h1 class="title is-4 ">Registro estacion Platzi</h1>
-          <div class="field">
-            <label class="label">Nombre</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Text input" />
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Apellido</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Text input" />
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Cargo</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Platzerito" />
-            </div>
-          </div>
-          <div class="column  is-offset-8">
-            <button class="button">ENVIAR</button>
-          </div>
-        </div>
-      </div>
+    .field
+      label.label Nombre
+      .control
+        input.input(type="text",placeholder="Text input")
+
+    .field
+      label.label Apellido
+      .control
+        input.input(type="text",placeholder="Text input")
+
+    .field
+      label.label Nombre
+      .control
+        input.input(type="text",placeholder="Text input")
+
+    .column.is-offset-8
+      .button ENVIAR
 
 </template>
 
