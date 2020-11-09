@@ -1,56 +1,86 @@
-<template lang="pug">
-.container.columns
-  .column.box.is-3.is-offset-5
-    .column.is-10.is-offset-1
-      img(alt="Vue logo", src="../assets/imagen.jpg")
-      h1.title.is-4 Estacion Platzi
-
-    .field
-      label.has-text-weight-bold.is-size-7 Nombre
-      .control
-        input.input(type="text")
-
-    .field
-      label.label Apellido
-      .control
-        input.input(type="text")
-
-    .field
-      label.label Nombre
-      .control
-        input.input(type="text")
-
-    .column.is-offset-8
-      button.button ENVIAR
+<template lang="pug" >
+#home
+  pm-notification(v-show="showNotification")
+    p(slot="body") No hay resultados
+  pm-notification(v-show="!showNotification")
+    p(slot="body1") No hay resultados
+  pm-loader(v-show="isLoading")
+  section.section(v-show="!isLoading")
+    nav.nav.has-shadow
+      .container
+        input.input.is-large(
+          type="text",
+          placeholder='Buscar cancion',
+          v-model='searchQuery')
+        a.button.is-info.is-large(@click='search') Bucar
+        a.button.is-danger.is-large &times
+        p.small {{searchMessage}}
+    .container
+      .columns.is-multiline
+        .column.is-one-quarter(v-for='t in tracks')
+          pm-track(
+            :class="{'is-active': t.id == selectedTrack}",
+            :track="t",
+            @select="setSelectedTrack"
+            )
 
 </template>
-
 <script>
-// @ is an alias to /src
+import trackServices from '@/services/track'
+import pmTrack from '../components/Track.vue'
+import pmLoader from '../components/shared/Loader.vue'
+import pmNotification from '../components/shared/Notification.vue'
 
 export default {
   name: 'Home',
-  components: {}
+  data () {
+    return {
+      searchQuery: '',
+      tracks: [],
+      isLoading: false,
+      selectedTrack: '',
+      showNotification: false
+    }
+  },
+  components: {
+    pmTrack,
+    pmLoader,
+    pmNotification
+  },
+
+  computed: {
+    searchMessage () {
+      return `Encontrados:${this.tracks.length}`
+    }
+  },
+  methods: {
+    search () {
+      if (!this.searchQuery) { return }
+      this.isLoading = true
+      trackServices.search(this.searchQuery).then(res => {
+        this.showNotification = res.tracks.total === 0
+        this.tracks = res.tracks.items
+        this.isLoading = false
+      })
+    },
+    setSelectedTrack (id) {
+      this.selectedTrack = id
+    }
+  },
+  watch: {
+    showNotification () {
+      if (this.showNotification) {
+        setTimeout(() => {
+          this.showNotification = false
+        }, 3000)
+      }
+    }
+  }
 }
 </script>
-<style lang="scss" scoped>
-@import "../scss/my-style.scss";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
-.container{
-  color: #212121;
-  font-family: 'Roboto', sans-serif;
-}
-h1{
-  color: #00BFD6 ;
-}
-
- label {
- color: $naranja-platzi;
- font-size:  0.75rem;
-}
-button{
-  background: #00BFD6 ;
-  color: white;
+<style lang="scss">
+.is-active{
+  border: 3px #23d160 solid;
 }
 
 </style>
