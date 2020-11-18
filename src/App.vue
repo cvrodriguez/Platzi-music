@@ -1,16 +1,9 @@
-<template >
+<template lang="pug" >
+  .container
+    pm-header
+    router-view
+    pm-footer
 
-  <div id="app">
-    <div id="nav">
-      <h1>Hola Vue</h1>
-       <pm-header>
-       </pm-header>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-<pm-footer></pm-footer>
-  </div>
 </template>
 
 <script>

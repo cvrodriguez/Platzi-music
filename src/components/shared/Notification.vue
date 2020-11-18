@@ -2,10 +2,10 @@
     .container
       .columns
         .column.is-5.is-offset-4
-          .notification.is-danger
-            slot(name="body") Algo anduvo mal
-          .notification.is-success
-            slot(name="body1") Estos son los Resultados
+          .notification.is-success(v-if="typeNotification")
+            p Estos son los Resultados
+          .notification.is-danger(v-if="!typeNotification")
+            p No se encuentran resultados
 
 </template>
 <script>
