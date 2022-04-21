@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/store'
 import EventBus from './plugins/even-bus'
 import { VueSpinners } from '@saeris/vue-spinners'
 import MsToMm from './filters/ms-to-mm'
